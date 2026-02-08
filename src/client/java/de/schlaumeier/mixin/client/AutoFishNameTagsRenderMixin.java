@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import de.schlaumeier.FishStats;
 import de.schlaumeier.FishTracker;
 import de.schlaumeier.ProbabilityColorHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -25,7 +26,8 @@ public class AutoFishNameTagsRenderMixin {
             return;
         }
 
-        int probability = FishTracker.getStats(player.getUUID()).getAutoFishingProbabilityPercent();
+        FishStats stats = FishTracker.getStats(player.getUUID());
+        int probability = stats != null ? stats.getAutoFishingProbabilityPercent() : 0;
         Component modified = original.copy().append(Component.literal("[" + probability + "%]").withColor(ProbabilityColorHelper.getColor(probability)));
 
         cir.setReturnValue(modified);
