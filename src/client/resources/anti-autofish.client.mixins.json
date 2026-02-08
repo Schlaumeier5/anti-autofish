@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "de.schlaumeier.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"AutoFishNameTagsRenderMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
