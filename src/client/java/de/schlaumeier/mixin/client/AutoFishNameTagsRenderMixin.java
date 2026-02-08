@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 @Mixin(EntityRenderer.class)
 public class AutoFishNameTagsRenderMixin {
     @Inject(
-        method = "getNameTag(Lnet/minecraft/entity/Entity;)Lnet/minecraft/network/chat/Component;",
+        method = "getNameTag(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/network/chat/Component;",
         at = @At("RETURN"),
         cancellable = true
     )
