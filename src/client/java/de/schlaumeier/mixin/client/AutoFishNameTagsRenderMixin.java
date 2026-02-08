@@ -28,7 +28,7 @@ public class AutoFishNameTagsRenderMixin {
 
         FishStats stats = FishTracker.getStats(player.getUUID());
         int probability = stats != null ? stats.getAutoFishingProbabilityPercent() : 0;
-        Component modified = original.copy().append(Component.literal("[" + probability + "%]").withColor(ProbabilityColorHelper.getColor(probability)));
+        Component modified = original.copy().append(Component.literal(" [" + probability + "%]").withColor(ProbabilityColorHelper.getColor(probability)));
 
         cir.setReturnValue(modified);
     }
