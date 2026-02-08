@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FishStats {
+    public FishState state = FishState.IDLE;
 
     public long lastCatchTime = -1;
     public long lastCastTime = -1;
@@ -14,22 +15,36 @@ public class FishStats {
     public final List<Long> dipToPull = new ArrayList<>();
 
     public void markCatch(long now) {
-        if (lastDipTime > 0) {
-            dipToPull.add(now - lastDipTime);
+        if (state == FishState.BITE) {
+            state = FishState.IDLE;
+            if (lastDipTime > 0) {
+                dipToPull.add(now - lastDipTime);
+            }
+            lastCatchTime = now;
         }
-        lastCatchTime = now;
+    }
+    public void markCatch() {
+        markCatch(System.currentTimeMillis());
     }
 
     public void markCast(long now) {
-        if (lastCatchTime > 0) {
-            castAfterCatch.add(now - lastCatchTime);
+        if (state == FishState.IDLE) {
+            if (lastCatchTime > 0) {
+                castAfterCatch.add(now - lastCatchTime);
+            }
+            lastCastTime = now;
         }
-        lastCastTime = now;
+    }
+    public void markCast() {
+        markCast(System.currentTimeMillis());
     }
 
     public void markDip() {
-        if (lastDipTime < System.currentTimeMillis() - 2000) {
-            lastDipTime = System.currentTimeMillis();
+        if (state == FishState.CAST) {
+            state = FishState.BITE;
+            if (lastDipTime < System.currentTimeMillis() - 2000) {
+                lastDipTime = System.currentTimeMillis();
+            }
         }
     }
 
